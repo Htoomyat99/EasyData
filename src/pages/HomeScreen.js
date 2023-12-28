@@ -28,7 +28,7 @@ const HomeScreen = () => {
   const [userInputValue, setUserInputValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
-  const [textInputvalue, setTextInputValue] = useState(0);
+  const [textInputvalue, setTextInputValue] = useState('');
   const [emptyArr, setEmptyArr] = useState([]);
 
   // const barData = [
@@ -176,6 +176,8 @@ const HomeScreen = () => {
       console.log('type >>>', typeValue);
       console.log('value >>>', textInputvalue);
       console.log('month >>>', monthValue);
+      emptyArr.push(typeValue);
+      console.log('emt >>', emptyArr);
     }
   };
 
@@ -268,6 +270,7 @@ const HomeScreen = () => {
           </View>
         ) : null}
 
+        {/* 
         <View style={{width: wp(92), marginTop: hp(3)}}>
           <BarChart
             showValuesAsTopLabel
@@ -286,7 +289,7 @@ const HomeScreen = () => {
             xAxisLabelTextStyle={{textAlign: 'center'}}
             labelWidth={100}
           />
-        </View>
+        </View> */}
       </View>
 
       {/* <BottomSheet
