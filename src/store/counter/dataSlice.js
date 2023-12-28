@@ -10,11 +10,8 @@ export const dataSlice = createSlice({
       state.push(action.payload);
     },
     editData: (state, action) => {
-      const {id, editedData} = action.payload;
-      const index = state.findIndex(data => data.id === id);
-      if (index !== -1) {
-        state[index] = editedData;
-      }
+      const {index, newData} = action.payload;
+      state[index] = newData;
     },
   },
 });

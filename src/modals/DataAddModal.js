@@ -21,7 +21,8 @@ const DataAddModal = ({
   textInputvalue,
   onChangeText,
   cancelPress,
-  addOnPress,
+  confirmAction,
+  isAdd,
 }) => {
   return (
     <Modal
@@ -76,10 +77,13 @@ const DataAddModal = ({
             <TouchableOpacity onPress={cancelPress} style={style.cancelContent}>
               <Text style={{fontSize: hp(2), color: '#fff'}}>Cancel</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
-              onPress={item => addOnPress(item)}
+              onPress={item => confirmAction(item)}
               style={style.addContent}>
-              <Text style={{fontSize: hp(2), color: '#fff'}}>ADD</Text>
+              <Text style={{fontSize: hp(2), color: '#fff'}}>
+                {isAdd ? 'Add' : 'Edit'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

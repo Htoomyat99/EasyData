@@ -12,7 +12,7 @@ import {
 } from 'react-native-responsive-screen';
 import DataAddModal from '../modals/DataAddModal';
 import {useDispatch, useSelector} from 'react-redux';
-import {addData} from '../store/counter/dataSlice';
+import {addData, editData} from '../store/counter/dataSlice';
 
 const Example = () => {
   const dispatch = useDispatch();
@@ -24,6 +24,8 @@ const Example = () => {
   const [typeValue, setTypeValue] = useState(null);
   const [typeOpen, setTypeOpen] = useState(false);
   const [textInputvalue, setTextInputValue] = useState('');
+  const [isAdd, setIsAdd] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const [monthList, setMonthList] = useState([
     {label: 'All', value: 'All'},
@@ -49,24 +51,56 @@ const Example = () => {
     {label: 'Type 4', value: 'type4'},
   ]);
 
-  const openModalHandler = () => {
+  const openAddModalHandler = () => {
     setOpenModal(true);
+    setIsAdd(true);
   };
 
-  const addHandler = () => {
+  const openEditModalHandler = index => {
+    setOpenModal(true);
+    setIsAdd(false);
+    setCurrentIndex(index);
+  };
+
+  const confirmHandler = () => {
+    if (isAdd) {
+      const addedData = {
+        id: Date.now(),
+        typeValue: typeValue,
+        monthValue: monthValue,
+        textInputvalue: textInputvalue,
+      };
+      dispatch(addData(addedData));
+    } else {
+      const editedData = {
+        typeValue: typeValue,
+        monthValue: monthValue,
+        textInputvalue: textInputvalue,
+      };
+      dispatch(editData({index: currentIndex, newData: editedData}));
+    }
     setOpenModal(false);
-    dispatch(addData({id: Date.now(), typeValue, monthValue, textInputvalue}));
+    console.log('data >>', data);
   };
 
   const cancelHandler = () => {
     setOpenModal(false);
   };
 
+  const editHandler = index => {
+    const editedData = {
+      typeValue: '3',
+      monthValue: '3',
+      textInputvalue: '3',
+    };
+    dispatch(editData({index, newData: editedData}));
+  };
+
   return (
     <SafeAreaView>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
       <TouchableOpacity
-        onPress={openModalHandler}
+        onPress={openAddModalHandler}
         style={{
           backgroundColor: 'pink',
           width: wp('15%'),
@@ -78,7 +112,7 @@ const Example = () => {
       </TouchableOpacity>
 
       {/* modal */}
-      {openModal && (
+      {openModal ? (
         <DataAddModal
           monthList={monthList}
           monthValue={monthValue}
@@ -94,19 +128,21 @@ const Example = () => {
           onChangeText={value =>
             setTextInputValue(value.replace(/[^0-9]/g, ''))
           }
-          addOnPress={addHandler}
+          confirmAction={confirmHandler}
           cancelPress={cancelHandler}
+          isAdd={isAdd}
         />
-      )}
+      ) : null}
 
-      {data.length > 1 &&
-        data.map(item => {
+      {data.length > 0 &&
+        data.map((item, index) => {
           return (
-            <View key={item.id}>
+            <View key={index}>
               <Text>{item.monthValue}</Text>
               <Text>{item.typeValue}</Text>
               <Text>{item.textInputvalue}</Text>
               <TouchableOpacity
+                onPress={() => openEditModalHandler(index)}
                 style={{
                   backgroundColor: 'teal',
                   width: wp(10),
