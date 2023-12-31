@@ -71,6 +71,7 @@ const Example = () => {
         textInputvalue: textInputvalue,
       };
       dispatch(addData(addedData));
+      console.log('data >>>', data);
     } else {
       const editedData = {
         typeValue: typeValue,
@@ -163,6 +164,26 @@ const Example = () => {
             </View>
           );
         })}
+
+      {/* <View style={{width: wp(92), marginTop: hp(3)}}>
+        <BarChart
+          showValuesAsTopLabel
+          showFractionalValues
+          showYAxisIndices
+          height={hp(50)}
+          stepValue={10}
+          noOfSections={10}
+          maxValue={100}
+          data={barData}
+          isAnimated
+          animationDuration={1500}
+          spacing={wp(7)}
+          onPress={item => console.log(item)}
+          barWidth={wp(6)}
+          xAxisLabelTextStyle={{textAlign: 'center'}}
+          labelWidth={100}
+        />
+      </View> */}
     </SafeAreaView>
   );
 };
