@@ -7,14 +7,19 @@ import {
 import BackIcon from '../../assets/icons/BackIcon';
 import {useDispatch, useSelector} from 'react-redux';
 import {addData} from '../store/counter/dataSlice';
+import {fetchGetByToken} from '../utils/fetchData';
+import apiUrl from '../utils/apiUrl';
 
 const HomeDetailScreen = ({route, navigation}) => {
-  const {data} = route.params;
+  const {monthName, yearName} = route.params;
   const dispatch = useDispatch();
-  const state = useSelector(state => state.data);
+  const state = useSelector(state => state.data.value);
 
   const [month, setMonth] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+
+  let controller = new AbortController();
+  const signal = controller.signal;
 
   // useEffect(() => {
   //   let fullMonth;
@@ -78,28 +83,40 @@ const HomeDetailScreen = ({route, navigation}) => {
       Dec: 'December',
     };
 
-    setMonth(monthMap[data] || 'Error Unknown');
-  }, [data]);
-
-  // useEffect(() => {
-  //   console.log(state);
-  // }, [state]);
+    setMonth(monthMap[monthName] || 'Error Unknown');
+  }, [monthName]);
 
   const backHandler = () => {
     navigation.goBack();
   };
 
   const addDataHanler = () => {
-    dispatch(addData({id: Date.now(), name: 'hello'}));
+    const addedData = {
+      year: yearName,
+      data: [
+        {
+          month: monthName,
+          type: 'type1',
+          value: 20,
+        },
+      ],
+    };
+    dispatch(addData(addedData));
   };
+
+  // const fetchPokenCart = async () => {
+  //   const response = await fetchGetByToken(apiUrl.cards, signal);
+  //   console.log('response >>>', response);
+  // };
 
   const editHandler = () => {
     console.log('value Edit');
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     return (
       <View
+        key={index}
         style={{
           backgroundColor: 'teal',
           paddingVertical: hp(1.5),
@@ -108,9 +125,16 @@ const HomeDetailScreen = ({route, navigation}) => {
           width: wp(85),
           borderRadius: wp(3),
         }}>
-        <Text style={{marginBottom: hp(1), color: '#fff'}}>{item.name}</Text>
+        <Text style={{marginBottom: hp(1), color: '#fff'}}>
+          {item.type} {item.value}
+        </Text>
+        <Text style={{marginBottom: hp(1), color: '#fff'}}></Text>
+        <Text style={{marginBottom: hp(1), color: '#fff'}}></Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={{color: '#fff'}}>{item.id}</Text>
+          <Text style={{color: '#fff'}}>
+            {item.year}
+            {item.month}
+          </Text>
           <TouchableOpacity
             onPress={editHandler}
             activeOpacity={0.8}
@@ -149,7 +173,7 @@ const HomeDetailScreen = ({route, navigation}) => {
         <FlatList
           style={{marginTop: hp(3)}}
           data={state}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.toString()}
           renderItem={renderItem}
         />
       ) : (

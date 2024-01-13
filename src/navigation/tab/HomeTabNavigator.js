@@ -10,7 +10,7 @@ const HomeTabNavigator = () => {
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
       <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
-      <Tab.Screen name="FilterStack" component={FilterStackNavigator} />
+      {/* <Tab.Screen name="FilterStack" component={FilterStackNavigator} /> */}
     </Tab.Navigator>
   );
 };

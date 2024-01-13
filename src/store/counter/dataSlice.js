@@ -1,13 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initialState = [];
+const initialState = {
+  value: [],
+};
 
 export const dataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
     addData: (state, action) => {
-      state.push(action.payload);
+      state.value.push(action.payload);
     },
     editData: (state, action) => {
       const {index, newData} = action.payload;
@@ -17,5 +19,4 @@ export const dataSlice = createSlice({
 });
 
 export const {addData, editData} = dataSlice.actions;
-
 export default dataSlice.reducer;

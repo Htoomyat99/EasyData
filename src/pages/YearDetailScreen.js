@@ -379,7 +379,7 @@ const YearDetailScreen = ({route, navigation}) => {
   const {data} = route.params;
 
   const monthDetailAction = item => {
-    navigation.navigate('MonthDetail', {data: item.name});
+    navigation.navigate('MonthDetail', {monthName: item.name, yearName: data});
   };
 
   const backHandler = () => {

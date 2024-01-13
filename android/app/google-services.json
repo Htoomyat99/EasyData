@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "606331792116",
+    "project_id": "auth-test-287ee",
+    "storage_bucket": "auth-test-287ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606331792116:android:3f6a77cecf0def2dc14ca1",
+        "android_client_info": {
+          "package_name": "com.easydata"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBScksWrtyP9Yr3wLWNXpZmB1O-HjdlfNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
